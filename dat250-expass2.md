@@ -1,11 +1,5 @@
 # Assignment 2 - REST API
 
-## Table of Contents
-- [Implementation](#implementation)
-- [Technical problems](#technical-problems)
-- [Pending issues](#pending-issues)
-- [Author](#author)
-
 ## Implementation
 The way I implemented this REST API is that I started by first creating the necessary domain and model classes
 which the domain model showed us. Then I made the tests using IntelliJ's HTTP Client, and made the controller classes
@@ -24,7 +18,4 @@ the whole poll class, it just referenced the poll question.
 An issue I haven't been able to solve yet is that I don't have any way to store the votes for each option in the poll class yet.
 I only save the vote per user but my thinking is that it should also be displayed on the poll as well those show how many voted
 for each option.
-
-## Author
-Andreas S. Henriksen - [andreashenriksen](https://github.com/andreashenriksen)
 
