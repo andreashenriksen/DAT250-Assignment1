@@ -39,6 +39,25 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+  run-http-tests:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl jq # Install curl and jq for HTTP tests
+
+    # Add the chmod command here to ensure the script is executable
+    - name: Grant execute permission for HTTP tests script
+      run: chmod +x ./run-http-tests.sh
+
+    - name: Run HTTP Client Tests
+      run: ./gradlew runHttpTests
+
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
     #
