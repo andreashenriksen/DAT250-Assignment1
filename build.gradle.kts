@@ -26,3 +26,15 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+task runHttpTests(type: Exec) {
+    description = 'Run HTTP client tests using curl in a shell script'
+    group = 'verification'
+
+    commandLine 'bash', './run-http-tests.sh'
+}
+
+test {
+    dependsOn runHttpTests
+}
+
