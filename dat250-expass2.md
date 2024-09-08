@@ -10,7 +10,9 @@
 The way I implemented this REST API is that I started by first creating the necessary domain and model classes
 which the domain model showed us. Then I made the tests using IntelliJ's HTTP Client, and made the controller classes
 before starting to expand the code to make the tests pass.  
-  
+
+  You can find the program code [here](https://github.com/andreashenriksen/DAT250-Assignment2/tree/master/src/main/java/com/example/demo)
+  and you can find the tests [here](https://github.com/andreashenriksen/DAT250-Assignment2/blob/master/src/main/resources/scratches/scratch.http).
 ## Technical problems
 Some technical problems I encountered while trying to make this project was that I was trying to save a list of created
 polls and votes for each user, and when I ran the HTTP requests I noticed that I got an endless object in response. 
