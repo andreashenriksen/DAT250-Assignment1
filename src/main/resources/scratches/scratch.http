@@ -19,11 +19,6 @@ Content-Type: application/json
 GET http://localhost:8080/users
 Accept: application/json
 
-<> 2024-09-08T210026-1.200.json
-<> 2024-09-08T205715-1.200.json
-<> 2024-09-08T205648-1.200.json
-<> 2024-09-08T205634-1.200.json
-
 ###
 
 POST http://localhost:8080/users
@@ -38,12 +33,6 @@ Content-Type: application/json
 
 GET http://localhost:8080/users
 Accept: application/json
-
-<> 2024-09-08T210026-3.200.json
-<> 2024-09-08T205715-3.200.json
-<> 2024-09-08T205648-3.200.json
-<> 2024-09-08T205634-3.200.json
-<> 2024-09-08T205148-3.200.json
 
 ###
 
