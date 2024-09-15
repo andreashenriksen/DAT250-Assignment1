@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@CrossOrigin
 public class PollManager {
 
     private Map<String, User> userMap = new HashMap<>();
