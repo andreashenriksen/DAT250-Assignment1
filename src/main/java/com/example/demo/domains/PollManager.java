@@ -5,24 +5,24 @@ import com.example.demo.models.User;
 import com.example.demo.models.Vote;
 import com.example.demo.models.VoteOption;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@CrossOrigin
 public class PollManager {
 
-    private Map<Integer, User> userMap = new HashMap<>();
+    private Map<String, User> userMap = new HashMap<>();
     private Map<Integer, Poll> pollMap = new HashMap<>();
-    private Map<Integer, VoteOption> voteOptionMap = new HashMap<>();
-    private Map<Integer, Vote> voteMap = new HashMap<>();
 
     public PollManager() {
     }
 
     public User addUser(User user) {
-        userMap.put(user.getId(), user);
+        userMap.put(user.getUsername(), user);
         return user;
     }
 
@@ -30,14 +30,14 @@ public class PollManager {
         return userMap.values();
     }
 
-    public User getUserById(Integer userId) {
-        return userMap.get(userId);
+    public User getUserByUsername(String username) {
+        return userMap.get(username);
     }
 
-    public User updateUser(Integer userId, User updatedUser) {
-        if (userMap.containsKey(userId)) {
-            updatedUser.setId(userId);
-            userMap.put(userId, updatedUser);
+    public User updateUser(String username, User updatedUser) {
+        if (userMap.containsKey(username)) {
+            updatedUser.setUsername(username);
+            userMap.put(username, updatedUser);
             return updatedUser;
         }
         return null;
@@ -48,7 +48,7 @@ public class PollManager {
     }
 
     public Poll addPoll(Poll poll) {
-        pollMap.put(poll.getPollId(), poll);
+        pollMap.put(poll.getId(), poll);
         return poll;
     }
 
@@ -62,7 +62,7 @@ public class PollManager {
 
     public Poll updatePoll(Integer pollId, Poll updatedPoll) {
         if (pollMap.containsKey(pollId)) {
-            updatedPoll.setPollId(pollId);
+            updatedPoll.setId(pollId);
             pollMap.put(pollId, updatedPoll);
             return updatedPoll;
         }
@@ -73,56 +73,43 @@ public class PollManager {
         return pollMap.remove(pollId) != null;
     }
 
-    public VoteOption addVoteOption(VoteOption voteOption) {;
-        voteOptionMap.put(voteOption.getId(), voteOption);
-        return voteOption;
+    public void addVoteOption(Poll poll, VoteOption voteOption) {;
+        poll.getVoteOptions().add(voteOption);
     }
 
-    public Collection<VoteOption> getAllVoteOptions() {
-        return voteOptionMap.values();
-    }
-
-    public VoteOption getVoteOptionById(Integer id) {
-        return voteOptionMap.get(id);
-    }
-
-    public VoteOption updateVoteOption(Integer id, VoteOption updatedVoteOption) {
-        if (voteOptionMap.containsKey(id)) {
-            updatedVoteOption.setId(id);
-            voteOptionMap.put(id, updatedVoteOption);
-            return updatedVoteOption;
+    public void updateVoteOption(Poll poll, VoteOption updatedVoteOption) {
+        for (VoteOption voteOption : poll.getVoteOptions()) {
+            if (voteOption.getPoll().equals(poll)) {
+                poll.getVoteOptions().remove(voteOption);
+                poll.getVoteOptions().add(updatedVoteOption);
+                updatedVoteOption.setPoll(poll);
+                break;
+            }
         }
-        return null;
     }
 
-    public boolean deleteVoteOption(Integer id) {
-        return voteOptionMap.remove(id) != null;
+    public boolean deleteVoteOption(Poll poll) {
+        for (VoteOption voteOption : poll.getVoteOptions()) {
+            if (voteOption.getPoll().equals(poll)) {
+                return poll.getVoteOptions().remove(voteOption);
+            }
+        }
+        return false;
     }
     
-    public Vote addVote(Vote vote) {
-        voteMap.put(vote.getId(), vote);
-        return vote;
+    public void addVote(Vote vote, User user) {
+        user.getAllVotes().add(vote);
     }
 
-    public Collection<Vote> getAllVotes() {
-        return voteMap.values();
-    }
-
-    public Vote getVoteById(Integer id) {
-        return voteMap.get(id);
-    }
-
-    public Vote updateVote(Integer id, Vote updatedVote) {
-        if (voteMap.containsKey(id)) {
-            updatedVote.setId(id);
-            voteMap.put(id, updatedVote);
-            return updatedVote;
+    public void updateVote(Vote updatedVote, User user) {
+        for (Vote vote : user.getAllVotes()) {
+            if (vote.getPoll().equals(updatedVote.getPoll())) {
+                user.getAllVotes().remove(vote);
+                user.getAllVotes().add(updatedVote);
+                updatedVote.setPoll(pollMap.get(vote.getPoll().getId()));
+                break;
+            }
         }
-        return null;
-    }
-
-    public boolean deleteVote(Integer id) {
-        return voteMap.remove(id) != null;
     }
 
 }

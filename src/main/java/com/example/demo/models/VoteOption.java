@@ -1,25 +1,23 @@
 package com.example.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class VoteOption {
 
     private String caption;
-    private int presentationOrder;
-    private Integer id;
-    private static int counter;
+    @JsonIgnore
+    private Poll poll;
+    private Collection<Vote> votes;
 
-    public VoteOption(String caption, int presentationOrder) {
-        this.id = ++counter;
+    public VoteOption(String caption, Poll poll) {
         this.caption = caption;
-        this.presentationOrder = presentationOrder;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.poll = poll;
+        poll.getVoteOptions().add(this);
+        this.votes = new ArrayList<Vote>();
     }
 
     public String getCaption() {
@@ -30,12 +28,27 @@ public class VoteOption {
         this.caption = caption;
     }
 
-    public int getPresentationOrder() {
-        return presentationOrder;
+    public Poll getPoll() {
+        return poll;
     }
 
-    public void setPresentationOrder(int presentationOrder) {
-        this.presentationOrder = presentationOrder;
+    public void setPoll(Poll poll) {
+        this.poll = poll;
     }
 
+    public Collection<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Collection<Vote> votes) {
+        this.votes = votes;
+    }
+
+    public void deleteVote(Vote vote) {
+        this.votes.remove(vote);
+    }
+
+    public void deleteAllVotes() {
+        this.votes.clear();
+    }
 }

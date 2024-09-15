@@ -1,23 +1,23 @@
 package com.example.demo.models;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.*;
 
 public class User {
 
-    private static int counter;
-    private Integer id;
     private String username;
     private String email;
-    private Map<Integer, String> polls = new HashMap<>();
-    private Set<Vote> votes = new HashSet<>();
+
+    private List<Poll> createdPolls;
+
+    private Collection<Vote> allVotes;
 
     public User(String username, String email) {
-        this.id = ++counter;
         this.username = username;
         this.email = email;
+        this.createdPolls = new ArrayList<>();
+        this.allVotes = new HashSet<>();
     }
 
     public String getUsername() {
@@ -36,42 +36,20 @@ public class User {
         this.email = email;
     }
 
-    public Integer getId() {
-        return id;
+    public List<Poll> getCreatedPolls() {
+        return createdPolls;
     }
 
-    public void setId(Integer userId) {
-        this.id = userId;
+    public void deletePoll(Poll poll) {
+        createdPolls.remove(poll);
     }
 
-    public Map<Integer, String> getPolls() {
-        return polls;
+    public Collection<Vote> getAllVotes() {
+        return allVotes;
     }
 
-    public void setPolls(Map<Integer, String> polls) {
-        this.polls = polls;
+    public void deleteVote(Vote vote) {
+        allVotes.remove(vote);
     }
 
-    public void addPoll(Poll poll) {
-        if (this.polls.containsValue(poll.getQuestion())) {
-            return;
-        }
-        this.polls.put(poll.getPollId(), poll.getQuestion());
-    }
-
-    public void removePoll(Integer id) {
-        this.polls.remove(id);
-    }
-
-    public Set<Vote> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Set<Vote> votes) {
-        this.votes = votes;
-    }
-
-    public void addVote(Vote vote) {
-        this.votes.add(vote);
-    }
 }

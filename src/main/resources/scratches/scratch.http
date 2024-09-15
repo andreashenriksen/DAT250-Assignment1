@@ -40,9 +40,10 @@ POST http://localhost:8080/polls
 Content-Type: application/json
 
 {
-  "userId": 1,
+  "id": "1",
+  "username": "User1",
   "question": "Pineapple on pizza?",
-  "voteOptions": ["yes", "no"]
+  "options": "yes,no"
 
 }
 
@@ -62,13 +63,13 @@ Accept: application/json
 
 ###
 
-POST http://localhost:8080/votes
+POST http://localhost:8080/polls/1/vote
 Content-Type: application/json
 
 {
-  "userId": 2,
+  "username": "User2",
   "pollId": 1,
-  "voteOptionId": 1
+  "option": "yes"
 }
 
 > {%
@@ -79,13 +80,13 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/votes/1
+PUT http://localhost:8080/polls/1/vote/1
 Content-Type: application/json
 
 {
-  "userId": 2,
+  "username": "User2",
   "pollId": 1,
-  "voteOptionId": 2
+  "option": "no"
 }
 
 > {%
@@ -96,14 +97,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/votes
-Accept: application/json
-
-###
-
 DELETE http://localhost:8080/polls/1
-
-###
-
-GET http://localhost:8080/votes
-Accept: application/json
