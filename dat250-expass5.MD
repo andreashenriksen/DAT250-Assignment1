@@ -18,6 +18,9 @@ I encountered some technical problems during this assignment with mongodb versio
 ### Map Reduce
 ![Experiment 2](images/experiment2.PNG)
 
+#### Map Reduce on total amounts of items ordered
+![Experiment 2](images/experiment2_own_map.PNG)
+
 #### Why is map reduce useful?
 Map reduce is a useful operations because it can take large volumes of data and condense it into smaller aggregated results. With the collection used in experiment 2, I used `mapReduce()` to aggregate each customer based on their `cust_id` and get the total amount of `price` for each customer. With this it's a lot easier to see the total amount of money a customer has spent.
 

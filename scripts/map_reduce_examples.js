@@ -28,25 +28,41 @@ async function run() {
     console.log(result.insertedIds);
     
     
-    var mapFunction1 = function() {
-        emit(this.cust_id, this.price)
-    }
+    // var mapFunction1 = function() {
+    //     emit(this.cust_id, this.price)
+    // }
 
-    var reduceFunction1 = function(keyCustId, valuesPrices) {
-        return Array.sum(valuesPrices);
-    };
+    // var reduceFunction1 = function(keyCustId, valuesPrices) {
+    //     return Array.sum(valuesPrices);
+    // };
 
-    await db.collection('orders').mapReduce(
-        mapFunction1,
-        reduceFunction1,
-        { out: "map_reduce_example" }
-    )
+    // await db.collection('orders').mapReduce(
+    //     mapFunction1,
+    //     reduceFunction1,
+    //     { out: "map_reduce_example" }
+    // )
 
-    console.log("\nMap reducing");
-    result = await db.collection('map_reduce_example').find().sort( { _id: 1 } )
-    console.log(result.toArray());
+    // console.log("\nMap reducing");
+    // result = await db.collection('map_reduce_example').find().sort( { _id: 1 } )
+    // console.log(result.toArray());
 
-    await client.close()
+    const agg = [
+        {
+          '$unwind': '$items'
+        }, {
+          '$group': {
+            '_id': '$cust_id', 
+            'total_items': {
+              '$sum': '$items.qty'
+            }
+          }
+        }
+    ];
+
+    const cursor = db.collection('orders').aggregate(agg);
+    result = await cursor.toArray();
+    console.log(result);
+    await client.close();
     
 }
 
