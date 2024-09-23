@@ -2,7 +2,7 @@
 ## Technical problems
 I encountered some technical problems during this assignment with mongodb versions. When I was following the versions for experiment 1 the documentation was for v7.0 so that is the version I worked with first and it went fine doing those experiments. When I came to experiment 2 with mapReduce() I found out that the function is deprecated since v5.0 so it no longer worked with the version I had installed. To get that working I had to change over to v4.4 and it worked, but then all the code I had written following the previous experiments didn't provide the right results so I had to change back to v7.0 to take a screenshot of them.
 
-When making my own map reduce operation I had already changed back to v7.0 again so instead of changing versions a 2nd time I used aggregation pipeline instead of Map-Reduce since it will produce the same result and aggregation pipeline is the recommended method to use after map reduce was deprecated.
+When making my own map reduce operation I had already changed back to v7.0 again so instead of changing versions a 2nd time I used aggregation pipeline instead of Map-Reduce since it will produce the same result and aggregation pipeline is the recommended method to use after map reduce was deprecated. To make this run I commented out the previous Map-Reduce operation in [map_reduce_examples.js](https://github.com/andreashenriksen/DAT250-Assignments/blob/master/scripts/map_reduce_examples.js) to make the new one run without any issues.
 
 ## Screenshots
 ### Validation
